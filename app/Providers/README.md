@@ -1,0 +1,1 @@
+To redirect to recipe page once logged in and not into dashboard . change the  public const HOME = '/dashboard'; to /recipes in App\Provider\RouteServiceProvider.
