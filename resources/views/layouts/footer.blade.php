@@ -1,116 +1,65 @@
-<!-- ##### Follow Us Instagram Area Start ##### -->
-<div class="follow-us-instagram">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Follow Us Instragram</h5>
-                </div>
-            </div>
-        </div>
-        <!-- Instagram Feeds -->
-        <div class="insta-feeds d-flex flex-wrap">
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta1.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
+<div class="container">
+  <footer class="py-5">
+    <div class="row">
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
 
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta2.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
 
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta3.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
 
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta4.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta5.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta6.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            <!-- Single Insta Feeds -->
-            <div class="single-insta-feeds">
-                <img src="img/bg-img/insta7.jpg" alt="">
-                <!-- Icon -->
-                <div class="insta-icon">
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </div>
-            </div>
-        </div>
+      <div class="col-md-5 offset-md-1 mb-3">
+        <form>
+          <h5>Subscribe to our newsletter</h5>
+          <p>Monthly digest of what's new and exciting from us.</p>
+          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+            <button class="btn btn-success" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <!-- ##### Follow Us Instagram Area End ##### -->
 
-<!-- ##### Footer Area Start ##### -->
-<footer class="footer-area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                    <!-- Footer Social Info -->
-                    <div class="footer-social-info text-right">
-                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </div>
-                    <!-- Footer Logo -->
-                    <div class="footer-logo">
-                        <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-                    </div>
-                    <!-- Copywrite -->
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area Start ##### -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <p>&copy; 2022 Company, Inc. All rights reserved.</p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
 
-    <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="js/active.js"></script>
+
+    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+      
+  </body>

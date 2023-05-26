@@ -12,9 +12,9 @@ class RecipeController extends Controller
 {
     public function index(Request $request)
     {
-        $welcome_message = 'Search List';
+      
         $keyword = $request->get('search');
-
+        $welcome_message = 'Search List for  "' . $keyword . '"';
         if (!empty($keyword)) {
             $recipes = Recipe::where('title', 'LIKE', "%$keyword%")->inRandomOrder()->get();
         } else {
@@ -23,6 +23,10 @@ class RecipeController extends Controller
         }
 
         return view('recipes.index', compact('recipes', 'welcome_message'));
+    }
+    public function details()
+    {
+        return view('recipes.details');
     }
 
     public function create()
@@ -35,12 +39,15 @@ class RecipeController extends Controller
     {
         // $user_id = auth()->user()["id"];
         // $array = $request->all();
-
-        $user_id = auth()->user()->id; // u can add hidden field  in create.blade.php but its secure here
-        $array = $request->except('image');
+        $ingredients = json_encode($request->input('ingredient'));
+        // echo implode("| ", $ingredients);
+        $directions= json_encode($request->input('direction'));
+        // echo implode("|", $directions);
+        $user_id = auth()->user()->id;
+        $array = $request->except(['image', 'ingredient', 'direction']);
         $array['user_id'] = $user_id;
-        dd($array);
-
+        $array['ingredients'] = $ingredients;
+        $array['directions'] = $directions; //table name
         // Upload and process the image
         $file_name = time() . '.' . request()->image->getClientOriginalExtension();
 

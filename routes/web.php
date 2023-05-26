@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 /*import controller*/
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
+Route::get('/recipes/details', [RecipeController::class, 'details'])->name('recipes.details');
 Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard');
 Route::post('/recipes/store', [RecipeController::class, 'store'])->name('recipes.store')->middleware('guard');
 Route::get('/recipes/show/{recipe}', [RecipeController::class, 'show'])->name('recipes.show')->middleware('guard'); // guard ensures that user should be logged in first in order to perform the route

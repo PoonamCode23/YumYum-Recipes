@@ -2,7 +2,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-underline" id="pills-tab" role="tablist">
             <div class="container-fluid d-flex">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('logo.png') }}" alt="logo" style="width:160px;height: auto;margin-right: 20px;">
+                    <img src="{{ asset('logo.png') }}" alt="logo" style="width:220px;height: auto;margin-right: 20px;">
                 </a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 

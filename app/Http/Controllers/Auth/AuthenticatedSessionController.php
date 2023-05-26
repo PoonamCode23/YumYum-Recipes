@@ -29,7 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('success','Login Sucssfully');//display this once logged in
+        //display this once logged  //use. operator for dynamic part
+        return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Hi ' . (Auth::user() ? Auth::user()->name : '') . '! You Are Successfully Logged In.');
+
     }
 
     /**

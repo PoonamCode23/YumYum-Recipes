@@ -18,8 +18,7 @@ class LoginMiddleware
     {
         if (!auth()->user()) {
             
-            return redirect()->route('login')
-        ->with('info','Login First!');
+            return redirect()->route('login') ->with('info',' Please Login First to add recipes!');
         }
         return $next($request);
     }
