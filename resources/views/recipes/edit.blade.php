@@ -34,19 +34,23 @@
             <div id="ingredientContainer">
                 <div class="form-group mb-3">
                     <label class="fs-5" for="formGroupExampleInput mb-3">Ingredients</label>
-                    <input type="text" class="form-control" value="{{ old('ingredient.0', $recipe->ingredient[0] ?? '') }}" name="ingredient[]" placeholder="e.g. 2 cups flour"> 
+                    @foreach($ingredients as $ingredient)
+                    <input type="text" class="form-control" value="{{$ingredient }}" name="ingredient[]" placeholder="e.g. 2 cups flour"> 
+
+                    @endforeach
                 </div>
 
-                <div class="form-group mb-3">
-                    <input type="text" class="form-control" name="ingredient[]" placeholder="e.g. 1 spoon sugar">
-                </div>
+               
             </div>
             <button type="button" style="color: green" class="btn mb-3" id="addIngredientBtn"><i class="ph-bold ph-plus"></i>Add Ingredient</button>
 
             <div id="directionContainer">
                 <div class="form-group mb-3">
                     <label class="fs-5" for="formGroupExampleInput">Directions</label>
-                    <input type="text" class="form-control" name="direction[]" value="{{ old('direction.0', $recipe->direction[0] ?? '') }}" placeholder="e.g. Preheat oven to 200 degrees.....">
+
+                    @foreach($directions as $direction)
+                    <input type="text" class="form-control" name="direction[]" value="{{$direction }}" placeholder="e.g. Preheat oven to 200 degrees.....">
+                    @endforeach
                 </div>
 
                 <div class="form-group mb-3">

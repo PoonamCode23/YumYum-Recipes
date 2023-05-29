@@ -12,7 +12,6 @@ class RecipeController extends Controller
 {
     public function index(Request $request)
     {
-      
         $keyword = $request->get('search');
         $welcome_message = 'Search List for  "' . $keyword . '"';
         if (!empty($keyword)) {
@@ -24,22 +23,52 @@ class RecipeController extends Controller
 
         return view('recipes.index', compact('recipes', 'welcome_message'));
     }
-    public function details()
+//-------------------------------------------------------------------------------------------------------------------------------
+    public function welcome(Recipe $recipe)
     {
-        return view('recipes.details');
+        $recipes = Recipe::inRandomOrder()->get();
+
+        return view('/welcome', compact('recipes'));
     }
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------
+    public function edit(Recipe $recipe)
+    {
+        $ingredients = json_decode($recipe->ingredients);
+        $directions = json_decode($recipe->directions);
+        return view('recipes.edit', compact('recipe', 'ingredients', 'directions'));  // table name, input name is only for extracting data from view page.
+        
+    }
+//-------------------------------------------------------------------------------------------------------------------------------
+
+
+    public function details($id)  //need to pass id for edit view details.
+        {
+        $recipe = Recipe::where('id',$id)->firstorfail();
+        $ingredients = json_decode($recipe->ingredients);
+        $directions = json_decode($recipe->directions);
+        return view('recipes.details',compact('recipe', 'ingredients','directions')); // json should be decoded here too to display ingredients and
+    }
+//-------------------------------------------------------------------------------------------------------------------------------
+
 
     public function create()
     {
         session()->forget('success');
         return view('recipes.create');
     }
+//-------------------------------------------------------------------------------------------------------------------------------
+
 
     public function store(StoreRecipe $request)
     {
         // $user_id = auth()->user()["id"];
         // $array = $request->all();
-        $ingredients = json_encode($request->input('ingredient'));
+        $ingredients = json_encode($request->input('ingredient')); //input name is only for extracting data from view page.
+
         // echo implode("| ", $ingredients);
         $directions= json_encode($request->input('direction'));
         // echo implode("|", $directions);
@@ -58,16 +87,15 @@ class RecipeController extends Controller
 
         return redirect()->route('recipes.index')->with('success', 'New recipe has been added successfully.');
     }
+//-------------------------------------------------------------------------------------------------------------------------------
+
 
     public function show(Recipe $recipe)
     {
         return view('recipes.show', compact('recipe'));
-    }
 
-    public function edit(Recipe $recipe)
-    {
-        return view('recipes.edit', compact('recipe'));
     }
+//-------------------------------------------------------------------------------------------------------------------------------
 
     public function update(Recipe $recipe, Request $request)
     {
@@ -83,7 +111,7 @@ class RecipeController extends Controller
         //     'name' => 'poonam'
         // ]);
     }
-
+//-------------------------------------------------------------------------------------------------------------------------------
     public function destroy(Recipe $recipe)
     {
         File::delete(public_path('images/' . $recipe->image));
