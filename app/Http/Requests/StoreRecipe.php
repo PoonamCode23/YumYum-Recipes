@@ -21,18 +21,15 @@ class StoreRecipe extends FormRequest
      *
      * @return array<string, mixed>
      */
- public function rules()
-{
-    return [
-        'title' => 'required',
-        'description' => 'required',
-        'image' => 'required|image|mimes:jpg,png,jpeg,gif,webp,svg|max:2028',
-        'time_required' => 'required',
-        'servings' => 'required',
-        'ingredient' => 'required|array',
-        'ingredient.*' => 'required',
-        'direction' => 'required|array',
-        'direction.*' => 'required'
-    ];
-}
+    public function rules()
+    {
+        return [
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,webp,svg|max:2028',
+            'time_required' => 'required',
+            'servings' => 'required',
+
+        ];
+    }
 }

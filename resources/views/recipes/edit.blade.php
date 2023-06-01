@@ -19,7 +19,7 @@
                         <label class="fs-5" for="formGroupExampleInput2">Description</label>
                         <textarea style="height: 160px;" name="description" class="form-control ">{{ $recipe->description }}</textarea>
                     </div>
-                 </div>
+                </div>
 
                 <div class="d-grid">
                     <label class="mb-2 fs-5" for="formGroupExampleInput3">Add Image</label>
@@ -35,12 +35,12 @@
                 <div class="form-group mb-3">
                     <label class="fs-5" for="formGroupExampleInput mb-3">Ingredients</label>
                     @foreach($ingredients as $ingredient)
-                    <input type="text" class="form-control" value="{{$ingredient }}" name="ingredient[]" placeholder="e.g. 2 cups flour"> 
+                    <input type="text" class="form-control" value="{{$ingredient }}" name="ingredient[]" placeholder="e.g. 2 cups flour">
 
                     @endforeach
                 </div>
 
-               
+
             </div>
             <button type="button" style="color: green" class="btn mb-3" id="addIngredientBtn"><i class="ph-bold ph-plus"></i>Add Ingredient</button>
 
@@ -76,51 +76,51 @@
         </form>
     </section>
 </main>
-<style> 
- .form-control{
-height:55px;
- }
+<style>
+    .form-control {
+        height: 55px;
+    }
 </style>
-                       
 
-    <script>
-       function showFile(event){
-            var input= event.target;
-            var reader= new FileReader();
-            reader.onload=function(){
-                var dataURL=reader.result;
-                var output=document.getElementById ('file-preview');
-                output.src=dataURL;
-            };
-            reader.readAsDataURL(input.files[0]);
-            }
-            document.getElementById('addIngredientBtn').addEventListener('click', function () {
-            var container = document.getElementById('ingredientContainer');
-            var newIngredientField = document.createElement('div');
-            newIngredientField.classList.add('form-group');
-            var input = document.createElement('input');
-            input.setAttribute('type', 'text');
-            input.setAttribute('class', 'form-control');
-            input.setAttribute('name', 'ingredient[]');
-            input.setAttribute('placeholder', 'Add another ingredient');
 
-            newIngredientField.appendChild(input);
-            container.appendChild(newIngredientField);
-            
-            });
+<script>
+    function showFile(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+            var dataURL = reader.result;
+            var output = document.getElementById('file-preview');
+            output.src = dataURL;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+    document.getElementById('addIngredientBtn').addEventListener('click', function() {
+        var container = document.getElementById('ingredientContainer');
+        var newIngredientField = document.createElement('div');
+        newIngredientField.classList.add('form-group');
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control');
+        input.setAttribute('name', 'ingredient[]');
+        input.setAttribute('placeholder', 'Add another ingredient');
 
-            document.getElementById('addDirectionBtn').addEventListener('click', function () {
-            var container = document.getElementById('directionContainer');
-            var newDirectionField = document.createElement('div');
-            newDirectionField.classList.add('form-group');
-            var input = document.createElement('input');
-            input.setAttribute('type', 'text');
-            input.setAttribute('class', 'form-control');
-            input.setAttribute('name', 'direction[]');
-            input.setAttribute('placeholder', 'Add another steps');
+        newIngredientField.appendChild(input);
+        container.appendChild(newIngredientField);
 
-            newDirectionField.appendChild(input);
-            container.appendChild(newDirectionField);
-            });
-    </script>
+    });
+
+    document.getElementById('addDirectionBtn').addEventListener('click', function() {
+        var container = document.getElementById('directionContainer');
+        var newDirectionField = document.createElement('div');
+        newDirectionField.classList.add('form-group');
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control');
+        input.setAttribute('name', 'direction[]');
+        input.setAttribute('placeholder', 'Add another steps');
+
+        newDirectionField.appendChild(input);
+        container.appendChild(newDirectionField);
+    });
+</script>
 @endsection

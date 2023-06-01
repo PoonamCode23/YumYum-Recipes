@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[RecipeController::class, 'welcome'])->name('welcome');
+Route::get('/', [RecipeController::class, 'welcome'])->name('welcome');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 /*import controller*/
+
+
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('/recipes/{recipe}/details', [RecipeController::class, 'details'])->name('recipes.details');
 Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard');
@@ -37,4 +39,5 @@ Route::PUT('/recipes/{recipe}', [RecipeController::class, 'update'])->name('reci
 
 Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy')->middleware('guard');
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
