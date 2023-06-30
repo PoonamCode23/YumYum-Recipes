@@ -1,50 +1,92 @@
 @extends('layouts.main')
 @section('content')
 
-<!-- ##### Top Catagory Area Start ##### -->
-{{--<section class="top-catagory-area section-padding-80-0">
-        <div class="container">
-            <div class="row">
-                <!-- Top Catagory Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-catagory">
-                        <img src="{{asset('logo.png')}}" alt="">
-<!-- Content -->
-<div class="top-cta-content">
-  <h3>Strawberry Cake</h3>
-  <h6>Simple &amp; Delicios</h6>
-  <a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
-</div>
-</div>
-</div>
-<!-- Top Catagory Area -->
-<div class="col-12 col-lg-6">
-  <div class="single-top-catagory">
-    <img src="{{asset('logo.png')}}" alt="">
-    <!-- Content -->
-    <div class="top-cta-content">
-      <h3>Chinesse Noodles</h3>
-      <h6>Simple &amp; Delicios</h6>
-      <a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-</section>--}}
-<!-- ##### Top Catagory Area End ##### -->
-<main class="container">
+<main class="container" style="margin-top:124px;">
   <div class="row">
     @foreach($recipes as $recipe)
-    <div class="col-md-3"><!-- Display screen size -->
+    <div class="col-md-3"><!-- 12/4=4 items -->
       <div class="card mb-3">
-        <img class="card-img-top" style="width: 100%; height: 45%; object-fit: content;" src="{{ asset('images/' . $recipe->image) }}" alt="Card image cap"><!-- Object-fit property to ensure that the image fills the available space while maintaining its aspect ratio -->
+        <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;" src="{{ asset('images/' . $recipe->image) }}" alt="Card image cap"><!-- Object-fit property to ensure that the image fills the available space while maintaining its aspect ratio -->
         <div class="card-body">
-          <h4 class="card-title receip-title mb-3">{{ $recipe->title }}</h4>
-          <p class="card-text">{{ $recipe->description }}</p>
+          <div class="d-flex justify-content-between">
+            <h4 class="card-title receip-title mb-3 ">{{ $recipe->title }}</h4>
+            <form action="{{ route('favourites.save') }} " class="text-decoration-none" method="POST">
+              @csrf
+              <input type="hidden" name="recipe_id" value="{{$recipe->id}}" />
+              <button type="submit" class="save-button" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Save">
+                <i class=" ph-bold ph-heart"></i>
+              </button>
+            </form>
+          </div>
+          <p class="card-text">
+            @php
+            $words = explode(' ', $recipe->description);
+            $maxWords = 17;
+            $displayDescription = count($words) > $maxWords ? implode(' ', array_slice($words, 0, $maxWords)) . '...' : $recipe->description;
+            echo $displayDescription;
+            @endphp
+          </p>
 
 
+          <p>Recipe by <a href="{{ route('recipes.user', $recipe->user_id) }}" class="text">{{ $recipe->user->name ?? 'Unknown' }}</a></p> <!-- while clicking this name route url is passed as specified in the web.php---><!-- $recipe->user_id helps to pass parameter to the route which in turn passes  it to controller.-->
+          <div class="d-flex justify-content-between">
+            @php
+            $averageStarRating = round(number_format(round($recipe->comments->avg('ratings'), 1), 1));
+            $integerPart = floor($averageStarRating);
+            $decimalPart = $averageStarRating - $integerPart;
+            @endphp
+
+            @if($averageStarRating > 0)
+
+            <div class="col-6">
+              <div class="rating mb-3" id="star-ratings">
+                <!-- <input type="hidden" name="rating" id="rating"> -->
+                <!-- <label for="star5" class="star1 {{ $decimalPart >= 0.5 && $integerPart < 5 ? 'half' : '' }}" data-rating="5">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star4" class="star1 {{ $integerPart >= 4 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 4 ? 'half' : '' }}" data-rating="4">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star3" class="star1 {{ $integerPart >= 3 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 3 ? 'half' : '' }}" data-rating="3">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star2" class="star1 {{ $integerPart >= 2 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 2 ? 'half' : '' }}" data-rating="2">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star1" class="star1 {{ $integerPart >= 1 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 1 ? 'half' : '' }}" data-rating="1">
+                  <i class="ph-fill ph-star"></i>
+                </label> -->
+
+                <label for="star5" class="star1 {{ $averageStarRating >= 5? 'checked' : '' }} " data-rating="5">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star4" class="star1 {{ $averageStarRating >= 4? 'checked' : '' }}" data-rating="4">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star3" class="star1 {{ $averageStarRating>= 3? 'checked' : '' }} " data-rating="3">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star2" class="star1 {{ $averageStarRating >= 2? 'checked' : '' }} " data-rating="2">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+                <label for="star1" class="star1 {{ $averageStarRating >= 1 ? 'checked' : '' }} " data-rating="1">
+                  <i class="ph-fill ph-star"></i>
+                </label>
+              </div>
+            </div>
+
+            @endif
+
+
+            <p>
+              @if ($recipe->comments->count() > 0)
+              {{ $recipe->comments->count() }} Reviews
+              @endif
+            </p>
+
+          </div>
           <a href="{{ route('recipes.details', $recipe->id) }}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+
           @auth
           @if(auth()->user()->id == $recipe->user_id)
           <a href="{{ route('recipes.edit', $recipe->id) }}" style="text-decoration: none; position: absolute; bottom: 10px; right: 10px;"><i class="ph-bold ph-pencil"></i></a>
@@ -59,12 +101,51 @@
       </div>
     </div>
     @endforeach
-  </div>
+    <div class="pagination">
+      {{ $recipes->links() }} <!--see app\provider\appserviceprovider-->
+    </div>
 </main>
 
-@endsection
+@if($message = Session::get('success'))
+<script type="text/javascript">
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
 
+  Toast.fire({
+    icon: 'success',
+    title: '{{ $message}}'
+  });
+</script>
+@endif
 
+<script>
+  window.deleteConfirm = function(e) {
+    e.preventDefault();
+    var form = document.getElementById('deleterecipe');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    })
+  }
+</script>
 
 
 
@@ -74,8 +155,9 @@
     background-color: coral;
     position: absolute;
     text-decoration: none;
-    padding: 5px;
     transition: box-shadow 0.4s ease;
+    padding: 5px 15px;
+    border-radius: 5px;
   }
 
   .button:hover {
@@ -84,95 +166,88 @@
 
   .card {
     transition: box-shadow 0.4s ease;
+    border: 1px solid wheat !important;
   }
 
   .card:hover {
-    box-shadow: 3px 4px 6px rgba(255, 127, 80, 0.5);
+    box-shadow: 3px 4px 6px rgba(255, 127, 80, 0.8);
+
   }
 
+  .text {
+    font-style: italic;
+    font-size: 14px;
+    text-decoration: none;
+  }
 
+  .text:hover {
+    box-shadow: 3px 4px 6px rgba(255, 127, 80, 0.8);
+  }
 
   .card-text {
     text-align: justify;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* Custom styles for the top category section */
-  .top-catagory-area {
-    padding: 80px 0;
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
   }
 
-  .single-top-catagory {
-    position: relative;
-    margin-bottom: 30px;
+  .active>.page-link,
+  .page-link.active {
+    background-color: coral !important;
+    border: coral !important;
   }
 
-  .single-top-catagory img {
+  .save-button {
+    font-size: 25px;
+    color: coral;
+    border: none;
+    background-color: transparent;
+  }
+
+  .custom-tooltip {
+    --bs-tooltip-bg: red;
+  }
+
+  /*css for average star raing*/
+
+  .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    display: block;
     width: 100%;
-    height: auto;
-    border-radius: 4px;
-    opacity: 0.5;
+    text-align: left;
   }
 
-  .top-cta-content {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: #fff;
-  }
-
-  .top-cta-content h3 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .top-cta-content h6 {
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 20px;
-  }
-
-  .top-cta-content a {
+  .star1 {
     display: inline-block;
-    padding: 12px 25px;
-    background-color: #ff4b2b;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 4px;
+    font-size: 21px;
+    /*color of unchecked star*/
+    color: #ccc;
   }
 
-  .top-cta-content a:hover {
-    background-color: #e6331a;
+  .star1.checked,
+  .star1.checked~.star1 {
+    color: coral;
   }
 
-  @media (max-width: 767px) {
-    .top-cta-content {
-      position: static;
-      text-align: center;
-    }
 
-    .top-cta-content h3 {
-      font-size: 20px;
-    }
+  .star1.half {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .star1.half:before {
+    content: '\2605';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: coral;
   }
 </style>
+@endsection
+<!-- this should be at the end of code -->

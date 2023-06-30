@@ -27,17 +27,43 @@ Route::middleware('auth')->group(function () {
 });
 /*import controller*/
 
-
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('/recipes/{recipe}/details', [RecipeController::class, 'details'])->name('recipes.details');
-Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard');
-Route::post('/recipes/store', [RecipeController::class, 'store'])->name('recipes.store')->middleware('guard');
-Route::get('/recipes/show/{recipe}', [RecipeController::class, 'show'])->name('recipes.show')->middleware('guard'); // guard ensures that user should be logged in first in order to perform the route
+Route::get('/recipes/{recipe}/details', [RecipeController::class, 'details'])->name('recipes.details'); // this name should be added for naming routes in blade file. {recipe is the parameter passed in the controller  public function details($id)} think of it as a function to add two number and how parameter is passed in php.
 
-Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit')->middleware('guard');
+Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard'); // guard ensures that user should be logged in first in order to perform the route
+
+Route::post('/recipes/store', [RecipeController::class, 'store'])->name('recipes.store')->middleware('guard');
+// Route::get('/recipes/show/{recipe}', [RecipeController::class, 'show'])->name('recipes.show')->middleware('guard'); 
+Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit')->middleware('guard'); //we are using get method to pass value in the url.
 Route::PUT('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update')->middleware('guard');
 
 Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy')->middleware('guard');
+Route::get('/recipes/users/{user_id}', [RecipeController::class, 'userRecipes'])->name('recipes.user'); // user_id is passed to the parameter of userRecipes function. The name of the parameter can be any. it doesnt have to be $user_id. It can be $aaa as well or any other variables.
+
+
+Route::post('/recipes/store-ratings', [RecipeController::class, 'storeReviews'])->name('recipes.store-ratings')->middleware('guard'); // use this way of routing. see details blade.php form
+Route::put('/reviews/{comment}/updateReviews', [RecipeController::class, 'updateReviews'])->name('reviews.updateReviews'); // write comment here for route binding
+
+
+Route::post('/comments/{commentId}/like', [RecipeController::class, 'likeComment'])
+    ->middleware(['guard'])
+    ->name('comments.like');
+
+Route::post('/favourites/save', [RecipeController::class, 'saveRecipe'])
+    ->middleware(['guard'])
+    ->name('favourites.save');
+
+
+Route::get('/recipes/saved', [RecipeController::class, 'savedRecipe'])
+    ->name('recipes.saved');
+
+Route::get('test', function () {
+    return view('recipes.test');
+});
+
+
+
+
 
 
 require __DIR__ . '/auth.php';

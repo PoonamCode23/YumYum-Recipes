@@ -31,12 +31,12 @@
             @foreach($recipes as $recipe)
             <div class="col-md-3"><!--display screen size-->
                 <div class="card mb-3">
-                    <img class="card-img-top" style="width: 100% ; height: 45%; object-fit: content;" src="{{asset('images/'. $recipe->image)}}" alt="Card image cap">{{--object-fit property to ensure that the image fills the available space while maintaining its aspect ratio.--}}
+                    <img class="card-img-top" style="width: 100% ; height: 45%; object-fit: cover;" src="{{asset('images/'. $recipe->image)}}" alt="Card image cap">{{--object-fit property to ensure that the image fills the available space while maintaining its aspect ratio.--}}
                     <div class="card-body">
                         <h4 class="card-title receip-title">{{ $recipe->title }}</h4>
                         <p class="card-text">{{$recipe->description }}</p>
 
-                        <a href="{{ route('recipes.details', $recipe->id) }}" class="button start-1 bottom-0 mb-3">View Details</a>
+                        <a href="{{ route('recipes.details', $recipe->id) }}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
                         @auth
                         @if(auth()->user()->id == $recipe->user_id)
                         <a href="{{ route('recipes.edit', $recipe->id) }}" style=" text-decoration: none; position: absolute; bottom: 10px;  right: 10px;"> <i class="ph-bold ph-pencil"></i></a>
@@ -84,8 +84,9 @@
         background-color: coral;
         position: absolute;
         text-decoration: none;
-        padding: 5px;
         transition: box-shadow 0.4s ease;
+        padding: 5px 15px;
+        border-radius: 5px;
     }
 
     .button:hover {
@@ -108,3 +109,22 @@
 </style>
 
 @endsection
+<script>
+    window.deleteConfirm = function(e) {
+        e.preventDefault();
+        var form = document.getElementById('deleterecipe');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        })
+    }
+</script>

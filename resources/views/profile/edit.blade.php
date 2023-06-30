@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="w-50 mx-auto py-12" style="margin-top:124px;">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
@@ -26,4 +26,10 @@
             </div>
         </div>
     </div>
+
+    <style>
+        body {
+            background-color: #FAE0CD;
+        }
+    </style>
 </x-app-layout>
