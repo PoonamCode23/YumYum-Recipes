@@ -19,11 +19,9 @@
                         <form method="post" action="{{ route('favourites.save', $recipe->recipe->id) }}">
                             @csrf
                             <input type="hidden" name="recipe_id" value="{{$recipe->recipe->id}}" />
-
-                            <button type="submit" class="saved-icon" data-bs-placement=" top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Unsave">
-                                <i class="ph-fill ph-heart"></i></a>
+                            <button type="submit" class="saved-icon" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Unsave">
+                                <i class="ph-fill ph-heart"></i>
                             </button>
-
 
                         </form>
                     </div>

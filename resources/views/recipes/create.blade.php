@@ -111,7 +111,18 @@
                             @endif
                         </div>
                     </div>
+                </div>
 
+                <div id="tagcontainer">
+                    <div class="form-group mb-3  ">
+                        <label class="fs-5" for="formGroupExampleInput mb-3 ">Tags</label>
+                        <input type="text" class="form-control " name="tag[]" placeholder="e.g. gluten-free">
+                    </div>
+                </div>
+
+                <button type="button" style="color:coral" class="btn mb-3 " id="addTagBtn"> <i class="ph-bold ph-plus"></i>Add Tags</button>
+
+                <div>
                     <button type="button" class="button btn-success mt-4" onclick="reset()">Cancel</button>
 
 
@@ -142,6 +153,7 @@
 
     }
 
+
     body {
         background-image: url("{{ asset('food.png') }}");
         background-repeat: no-repeat;
@@ -156,6 +168,10 @@
     }
 
     .direction-input {
+        width: 95%;
+    }
+
+    .tag-input {
         width: 95%;
     }
 
@@ -244,6 +260,35 @@
 
         newDirectionField.appendChild(inputWrapper);
         container.appendChild(newDirectionField);
+    });
+
+
+    document.getElementById('addTagBtn').addEventListener('click', function() {
+        var container = document.getElementById('tagcontainer');
+        var newTagField = document.createElement('div');
+        newTagField.classList.add('form-group', 'mb-3');
+
+        var inputWrapper = document.createElement('div');
+        inputWrapper.classList.add('input-wrapper');
+
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control tag-input');
+        input.setAttribute('name', 'tag[]');
+        input.setAttribute('placeholder', 'Add another step');
+        inputWrapper.appendChild(input);
+
+        var deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('ph', 'ph-x');
+        deleteIcon.style.color = 'red';
+        deleteIcon.style.cursor = 'pointer';
+        deleteIcon.addEventListener('click', function() {
+            container.removeChild(newTagField);
+        });
+        inputWrapper.appendChild(deleteIcon);
+
+        newTagField.appendChild(inputWrapper);
+        container.appendChild(newTagField);
     });
 
 

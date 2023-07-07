@@ -2,9 +2,13 @@
 @section('content')
 
 <main class="container">
+    <h1>Welcome {{auth()->user()->name}}</h1>
+    @if ($recipes->isEmpty())
+    <p>You haven't added any recipes yet! Add recipes to show it here.</p>
+    @else
     <section>
         <div class="d-flex align-items-center justify-content-between mb-3"> <!--align items at same row-->
-            <h3> {{$message}} </h3>
+            <h4> {{$message}} </h4>
         </div>
         @if($message = Session::get('success'))
         <script type="text/javascript">
@@ -56,6 +60,7 @@
         </div>
         </div>
     </section>
+    @endif
 </main>
 <script>
     window.deleteConfirm = function(e) {

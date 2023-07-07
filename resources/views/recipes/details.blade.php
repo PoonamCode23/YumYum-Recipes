@@ -282,8 +282,6 @@
         formName.form.reset();
     }
 
-
-
     function showForm() {
         var form = document.getElementById('updateRating');
         form.style.display = "block";

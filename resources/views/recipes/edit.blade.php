@@ -70,12 +70,23 @@
                             <input type="text" class="form-control" name="servings" value="{{ $recipe->servings }}" placeholder="e.g. 8">
                         </div>
                     </div>
-                    <div class="text-end">
-                        <button type=" submit" class="button btn-success mt-4">Update Recipe</button>
 
+                </div>
+                <div id="tagcontainer">
+                    <div class="form-group">
+                        <label class="fs-5" for="formGroupExampleInput">Tags</label>
+                        @if(!is_null($tags))
+                        @foreach($tags as $tag)
+                        <input type="text" class="form-control mb-3" value="{{$tag }}" name="tag[]" placeholder="e.g. 2 cups flour">
+                        @endforeach
+                        @endif
                     </div>
                 </div>
+                <button type="button" style="color:coral" class="btn mb-3 " id="addTagBtn"> <i class="ph-bold ph-plus"></i>Add Tags</button>
+                <div class="text-end">
+                    <button type=" submit" class="button btn-success mt-4">Update Recipe</button>
 
+                </div>
             </form>
         </section>
     </main>
@@ -194,6 +205,34 @@
 
         newDirectionField.appendChild(inputWrapper);
         container.appendChild(newDirectionField);
+    });
+
+    document.getElementById('addTagBtn').addEventListener('click', function() {
+        var container = document.getElementById('tagcontainer');
+        var newTagField = document.createElement('div');
+        newTagField.classList.add('form-group', 'mb-3');
+
+        var inputWrapper = document.createElement('div');
+        inputWrapper.classList.add('input-wrapper');
+
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control tag-input');
+        input.setAttribute('name', 'tag[]');
+        input.setAttribute('placeholder', 'Add another step');
+        inputWrapper.appendChild(input);
+
+        var deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('ph', 'ph-x');
+        deleteIcon.style.color = 'red';
+        deleteIcon.style.cursor = 'pointer';
+        deleteIcon.addEventListener('click', function() {
+            container.removeChild(newTagField);
+        });
+        inputWrapper.appendChild(deleteIcon);
+
+        newTagField.appendChild(inputWrapper);
+        container.appendChild(newTagField);
     });
 </script>
 @endsection

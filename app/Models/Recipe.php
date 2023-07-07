@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Recipe extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'image', 'ingredients', 'directions', 'time_required', 'servings', 'user_id'];
+    protected $fillable = ['title', 'description', 'image', 'ingredients', 'directions', 'time_required', 'servings', 'user_id', 'tags'];
 
     public function user(): BelongsTo
     {

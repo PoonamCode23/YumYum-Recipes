@@ -24,7 +24,8 @@ class RecipeController extends Controller
         } else {
 
             $recipes = Recipe::where('user_id', (auth()->user() ? auth()->user()->id : ''))->paginate(10); //the user_id column is typically expected to match the id of the currently authenticated user.' user_id' refers to the column name in the recipes
-            $message = isset(auth()->user()->id) ? 'Welcome ' . auth()->user()->name : 'Please add recipes to display your recipes here.';
+            // $message = isset(auth()->user()->id) ? 'Welcome ' . auth()->user()->name . '<br>' .
+            $message =   'These are recipes added by you. You can add more recipes to display your recipes here.';
         }
         $totalRecipes = count($recipes);
 
@@ -33,8 +34,11 @@ class RecipeController extends Controller
     //-------------------------------------------------------------------------------------------------------------------------------
     public function welcome() // we dont perform model route binding here cuz we dont need value of a particular recipe but we need details of whole recipe.
     {
+        // $query = Recipe::where('tags', 'LIKE', '%' . $tag . '%')->get();
+
 
         $recipes = Recipe::with(['user', 'favourites'])->paginate(16); //with('user') helps to bundle up query {} eager load }.  with(['user', 'favourites']) helps to fetch users and favourites data along with Recipe model. perform dd and see
+
 
         return view('/welcome', compact('recipes'));
     }
@@ -54,7 +58,8 @@ class RecipeController extends Controller
     {
         $ingredients = json_decode($recipe->ingredients);
         $directions = json_decode($recipe->directions);
-        return view('recipes.edit', compact('recipe', 'ingredients', 'directions'));  // table name, input name is only for extracting data from view page.
+        $tags = json_decode($recipe->tags);
+        return view('recipes.edit', compact('recipe', 'ingredients', 'directions', 'tags'));  // table name, input name is only for extracting data from view page.
 
     }
     //-------------------------------------------------------------------------------------------------------------------------------
@@ -141,22 +146,19 @@ class RecipeController extends Controller
         return view('recipes.create');
     }
     //-------------------------------------------------------------------------------------------------------------------------------
-
-
     public function store(StoreRecipe $request)
     {
-        // $user_id = auth()->user()["id"];
-        // $array = $request->all();
-        $ingredients = json_encode($request->input('ingredient')); //input name is only for extracting data from view page.
+        $ingredients = $request->data()['ingredients'];
+        $directions = $request->data()['directions'];
+        $tags = $request->data()['tags'];
 
-        // echo implode("| ", $ingredients);
-        $directions = json_encode($request->input('direction'));
-        // echo implode("|", $directions);
         $user_id = auth()->user()->id;
-        $array = $request->except(['image', 'ingredient', 'direction']);
+        $array = $request->except(['image', 'ingredient', 'direction', 'tag']);
         $array['user_id'] = $user_id;
-        $array['ingredients'] = $ingredients;
-        $array['directions'] = $directions; //table name
+        $array['ingredients'] = json_encode($ingredients);
+        $array['directions'] = json_encode($directions);
+        $array['tags'] = json_encode($tags);
+
         // Upload and process the image
         $file_name = time() . '.' . request()->image->getClientOriginalExtension();
 
@@ -167,7 +169,37 @@ class RecipeController extends Controller
 
         return redirect()->route('recipes.index')->with('success', 'New recipe has been added successfully.');
     }
-    //-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    // public function store(StoreRecipe $request)
+    // {
+    //     // $user_id = auth()->user()["id"];
+    //     // $array = $request->all();
+    //     $ingredients = json_encode($request->input('ingredient')); //input name is only for extracting data from view page.
+
+    //     // echo implode("| ", $ingredients);
+    //     $directions = json_encode($request->input('direction'));
+    //     // echo implode("|", $directions);
+    //     $tags = json_encode($request->input('tag'));
+
+    //     $user_id = auth()->user()->id;
+    //     $array = $request->except(['image', 'ingredient', 'direction', 'tag']);
+    //     $array['user_id'] = $user_id;
+    //     $array['ingredients'] = $ingredients;
+    //     $array['directions'] = $directions;
+    //     $array['tags'] = $tags; //table name
+    //     // Upload and process the image
+    //     $file_name = time() . '.' . request()->image->getClientOriginalExtension();
+
+    //     if (request()->image->move(public_path('images'), $file_name)) {
+    //         $recipes = Recipe::create($array);
+    //         $recipes->update(['image' => $file_name]);
+    //     }
+
+    //     return redirect()->route('recipes.index')->with('success', 'New recipe has been added successfully.');
+    // }
+    // //-------------------------------------------------------------------------------------------------------------------------------
     public function storeReviews(StoreReviews $request)
     {
         // Get the user ID
@@ -216,9 +248,11 @@ class RecipeController extends Controller
     //-------------------------------------------------------------------------------------------------------------------------------
     public function update(Recipe $recipe, Request $request)
     {
-        $data = $request->except(['image', 'direction', 'ingredient']);
+        $data = $request->except(['image', 'direction', 'ingredient', 'tag']);
         $data['ingredients'] = json_encode($request->input('ingredient'));
         $data['directions'] = json_encode($request->input('direction'));
+        $data['tags'] = json_encode($request->input('tag'));
+
 
         if ($request->hasFile('image')) {
             $file_name = time() . '.' . $request->image->getClientOriginalExtension();

@@ -32,4 +32,13 @@ class StoreRecipe extends FormRequest
 
         ];
     }
+
+    public function data()
+    {
+        return [
+            'ingredients' => $this->input('ingredient'),
+            'directions' => $this->input('direction'),
+            'tags' => $this->input('tag'),
+        ];
+    }
 }

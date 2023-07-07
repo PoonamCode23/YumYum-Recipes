@@ -10,13 +10,25 @@
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <h4 class="card-title receip-title mb-3 ">{{ $recipe->title }}</h4>
-            <form action="{{ route('favourites.save') }} " class="text-decoration-none" method="POST">
+            @if(auth()->check() && $recipe->favourites->contains('user_id', auth()->user()->id))
+            <form method="post" action="{{ route('favourites.save') }}" class="text-decoration-none">
               @csrf
-              <input type="hidden" name="recipe_id" value="{{$recipe->id}}" />
-              <button type="submit" class="save-button" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Save">
-                <i class=" ph-bold ph-heart"></i>
+              <input type="hidden" name="recipe_id" value="{{ $recipe->id }}" />
+              <button type="submit" class="saved-icon" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Unsave">
+                <i class="ph-fill ph-heart"></i>
               </button>
             </form>
+            @else
+            <form method="post" action="{{ route('favourites.save', $recipe->id) }}">
+              @csrf
+              <input type="hidden" name="recipe_id" value="{{ $recipe->id }}" />
+              <button type="submit" class="save-button" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Save">
+                <i class="ph-bold ph-heart"></i>
+              </button>
+            </form>
+            @endif
+
+
           </div>
           <p class="card-text">
             @php
@@ -29,6 +41,19 @@
 
 
           <p>Recipe by <a href="{{ route('recipes.user', $recipe->user_id) }}" class="text">{{ $recipe->user->name ?? 'Unknown' }}</a></p> <!-- while clicking this name route url is passed as specified in the web.php---><!-- $recipe->user_id helps to pass parameter to the route which in turn passes  it to controller.-->
+          <div>
+            @php
+            $tags = json_decode($recipe->tags);
+
+            if (!is_null($tags)) {
+            foreach ($tags as $tag) {
+            echo '<button class=" tags">' . $tag . '</button>';
+            }
+            }
+
+            @endphp
+
+          </div>
           <div class="d-flex justify-content-between">
             @php
             $averageStarRating = round(number_format(round($recipe->comments->avg('ratings'), 1), 1));
@@ -151,7 +176,7 @@
 
 <style>
   .button {
-    color: black;
+    color: white;
     background-color: coral;
     position: absolute;
     text-decoration: none;
@@ -207,6 +232,13 @@
     background-color: transparent;
   }
 
+  .saved-icon {
+    font-size: 25px;
+    color: red;
+    border: none;
+    background-color: transparent;
+  }
+
   .custom-tooltip {
     --bs-tooltip-bg: red;
   }
@@ -247,6 +279,19 @@
     width: 50%;
     overflow: hidden;
     color: coral;
+  }
+
+  .tags {
+    padding: 2px 8px;
+    margin: 0 5px 5px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+  }
+
+  .tags:hover {
+    background-color: black;
+    color: white;
   }
 </style>
 @endsection
