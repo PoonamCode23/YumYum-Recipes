@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 
 class RecipeController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request) // retrieve information about the incoming HTTP request, such as form data or query parameters,
     {
         $keyword = $request->get('search');
         if (!empty($keyword)) {
@@ -23,29 +23,42 @@ class RecipeController extends Controller
             $message = count($recipes) > 0 ? "Search List for '$keyword'" : "No results found for '$keyword'. Please try searching other recipes.";
         } else {
 
-            $recipes = Recipe::where('user_id', (auth()->user() ? auth()->user()->id : ''))->paginate(10); //the user_id column is typically expected to match the id of the currently authenticated user.' user_id' refers to the column name in the recipes
+            $recipes = Recipe::where('user_id', (auth()->user() ? auth()->user()->id : ''))->get(); //the user_id column is typically expected to match the id of the currently authenticated user.' user_id' refers to the column name in the recipes
             // $message = isset(auth()->user()->id) ? 'Welcome ' . auth()->user()->name . '<br>' .
             $message =   'These are recipes added by you. You can add more recipes to display your recipes here.';
         }
-        $totalRecipes = count($recipes);
-
-        return view('recipes.index', compact('recipes', 'message', 'totalRecipes')); // if we also compact the $keyboard then search item is seen in the blade file where the code is {{$keyword}}
+        return view('recipes.index', compact('recipes', 'message', 'keyword')); // if we also compact the $keyboard then search item is seen in the blade file where the code is {{$keyword}}
     }
     //-------------------------------------------------------------------------------------------------------------------------------
-    public function welcome() // we dont perform model route binding here cuz we dont need value of a particular recipe but we need details of whole recipe.
+    public function showByCategory($category)
     {
-        // $query = Recipe::where('tags', 'LIKE', '%' . $tag . '%')->get();
 
+        $recipes = Recipe::where('tags', 'LIKE', "%$category%")->paginate(5);
+        $message =  "Explore " . ucwords($category) . " Recipes";
+        return view('/welcome', compact('recipes', 'message', 'category'));
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
 
-        $recipes = Recipe::with(['user', 'favourites'])->paginate(16); //with('user') helps to bundle up query {} eager load }.  with(['user', 'favourites']) helps to fetch users and favourites data along with Recipe model. perform dd and see
+    public function welcome(Request $request) // we dont perform model route binding here cuz we dont need value of a particular recipe but we need details of whole recipe.
+    {
+        $tag = $request->input('tag');
 
+        $message = "Explore " . ucwords($tag) . " Recipes";
+        if (!empty($tag)) {
+            $query = Recipe::where('tags', 'LIKE', "%$tag%")->get();
 
-        return view('/welcome', compact('recipes'));
+            $recipes = Recipe::whereRaw('LOWER(tags) LIKE ?', '%' . strtolower($tag) . '%')->paginate(10);
+        } else {
+            $recipes = Recipe::with(['user', 'favourites'])->paginate(16); //with('user') helps to bundle up query {} eager load }.  with(['user', 'favourites']) helps to fetch users and favourites data along with Recipe model. perform dd and see
+        }
+        return view('/welcome', compact('recipes', 'message', 'tag'));
     }
 
     //-------------------------------------------------------------------------------------------------------------------------------
 
-    public function userRecipes($user_id) // this variable stores the user id of the routes url. represents the user ID passed in the URL of the route.
+
+
+    public function userRecipes($user_id) // this variable stores the user id of the routes url. represents the user ID passed in the URL of the route. u can use model route binding.
     {
         // Fetch the recipes associated with the user
         $recipes = Recipe::where('user_id', $user_id)->get();

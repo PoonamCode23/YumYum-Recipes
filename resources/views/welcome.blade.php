@@ -1,8 +1,12 @@
 @extends('layouts.main')
 @section('content')
-
 <main class="container" style="margin-top:124px;">
   <div class="row">
+    @if (!empty($tag) || !empty($category))
+    <div class="category-message">
+      {{$message}}
+    </div>
+    @endif
     @foreach($recipes as $recipe)
     <div class="col-md-3"><!-- 12/4=4 items -->
       <div class="card mb-3">
@@ -27,33 +31,8 @@
               </button>
             </form>
             @endif
-
-
           </div>
-          <p class="card-text">
-            @php
-            $words = explode(' ', $recipe->description);
-            $maxWords = 17;
-            $displayDescription = count($words) > $maxWords ? implode(' ', array_slice($words, 0, $maxWords)) . '...' : $recipe->description;
-            echo $displayDescription;
-            @endphp
-          </p>
 
-
-          <p>Recipe by <a href="{{ route('recipes.user', $recipe->user_id) }}" class="text">{{ $recipe->user->name ?? 'Unknown' }}</a></p> <!-- while clicking this name route url is passed as specified in the web.php---><!-- $recipe->user_id helps to pass parameter to the route which in turn passes  it to controller.-->
-          <div>
-            @php
-            $tags = json_decode($recipe->tags);
-
-            if (!is_null($tags)) {
-            foreach ($tags as $tag) {
-            echo '<button class=" tags">' . $tag . '</button>';
-            }
-            }
-
-            @endphp
-
-          </div>
           <div class="d-flex justify-content-between">
             @php
             $averageStarRating = round(number_format(round($recipe->comments->avg('ratings'), 1), 1));
@@ -65,23 +44,6 @@
 
             <div class="col-6">
               <div class="rating mb-3" id="star-ratings">
-                <!-- <input type="hidden" name="rating" id="rating"> -->
-                <!-- <label for="star5" class="star1 {{ $decimalPart >= 0.5 && $integerPart < 5 ? 'half' : '' }}" data-rating="5">
-                  <i class="ph-fill ph-star"></i>
-                </label>
-                <label for="star4" class="star1 {{ $integerPart >= 4 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 4 ? 'half' : '' }}" data-rating="4">
-                  <i class="ph-fill ph-star"></i>
-                </label>
-                <label for="star3" class="star1 {{ $integerPart >= 3 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 3 ? 'half' : '' }}" data-rating="3">
-                  <i class="ph-fill ph-star"></i>
-                </label>
-                <label for="star2" class="star1 {{ $integerPart >= 2 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 2 ? 'half' : '' }}" data-rating="2">
-                  <i class="ph-fill ph-star"></i>
-                </label>
-                <label for="star1" class="star1 {{ $integerPart >= 1 ? 'checked' : '' }} {{ $decimalPart >= 0.5 && $integerPart < 1 ? 'half' : '' }}" data-rating="1">
-                  <i class="ph-fill ph-star"></i>
-                </label> -->
-
                 <label for="star5" class="star1 {{ $averageStarRating >= 5? 'checked' : '' }} " data-rating="5">
                   <i class="ph-fill ph-star"></i>
                 </label>
@@ -110,6 +72,35 @@
             </p>
 
           </div>
+          <p class="card-text">
+            @php
+            $words = explode(' ', $recipe->description);
+            $maxWords = 17;
+            $displayDescription = count($words) > $maxWords ? implode(' ', array_slice($words, 0, $maxWords)) . '...' : $recipe->description;
+            echo $displayDescription;
+            @endphp
+          </p>
+
+
+          <p>Recipe by <a href="{{ route('recipes.user', $recipe->user_id) }}" class="text">{{ $recipe->user->name ?? 'Unknown' }}</a></p> <!-- while clicking this name route url is passed as specified in the web.php---><!-- $recipe->user_id helps to pass parameter to the route which in turn passes  it to controller.-->
+          <div class="mt-5 mb-5 d-flex flex-wrap">
+
+            @php
+            $tags = json_decode($recipe->tags);
+            @endphp
+            @if (!is_null($tags))
+            @foreach ($tags as $tag)
+            <form method="GET" action="{{ route('welcome') }}"><!--use this form inside for each loop or else data will be submitted as many as tags are available.-->
+              @csrf
+              <input type="hidden" name="tag" value="{{ $tag }}">
+              <button type="submit" class="tags">{{ $tag }}</button>
+            </form>
+            @endforeach
+            @endif
+
+
+          </div>
+
           <a href="{{ route('recipes.details', $recipe->id) }}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
 
           @auth
@@ -187,6 +178,13 @@
 
   .button:hover {
     box-shadow: 3px 4px 6px rgba(255, 127, 80, 0.8);
+  }
+
+  .category-message {
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 25px;
   }
 
   .card {

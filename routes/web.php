@@ -25,12 +25,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+//this create and save route are kept above category route because category route takes create and save as its {category}parameter  and display blank page cuz such category doesnt exist
+Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard'); // guard ensures that user should be logged in first in order to perform the route
+
+
+Route::get('/recipes/saved', [RecipeController::class, 'savedRecipe'])
+    ->name('recipes.saved');
+
 /*import controller*/
+Route::get('/recipes/{category}', [RecipeController::class, 'showByCategory'])->name('recipes.category');
+
 
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('/recipes/{recipe}/details', [RecipeController::class, 'details'])->name('recipes.details'); // this name should be added for naming routes in blade file. {recipe is the parameter passed in the controller  public function details($id)} think of it as a function to add two number and how parameter is passed in php.
 
-Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create')->middleware('guard'); // guard ensures that user should be logged in first in order to perform the route
 
 Route::post('/recipes/store', [RecipeController::class, 'store'])->name('recipes.store')->middleware('guard');
 // Route::get('/recipes/show/{recipe}', [RecipeController::class, 'show'])->name('recipes.show')->middleware('guard'); 
@@ -45,6 +53,10 @@ Route::post('/recipes/store-ratings', [RecipeController::class, 'storeReviews'])
 Route::put('/reviews/{comment}/updateReviews', [RecipeController::class, 'updateReviews'])->name('reviews.updateReviews'); // write comment here for route binding
 
 
+// Route::post('/search-by-tag', [RecipeController::class, 'searchByTag'])->name('searchByTag');
+
+
+
 Route::post('/comments/{commentId}/like', [RecipeController::class, 'likeComment'])
     ->middleware(['guard'])
     ->name('comments.like');
@@ -52,10 +64,6 @@ Route::post('/comments/{commentId}/like', [RecipeController::class, 'likeComment
 Route::post('/favourites/save', [RecipeController::class, 'saveRecipe'])
     ->middleware(['guard'])
     ->name('favourites.save');
-
-
-Route::get('/recipes/saved', [RecipeController::class, 'savedRecipe'])
-    ->name('recipes.saved');
 
 Route::get('test', function () {
     return view('recipes.test');

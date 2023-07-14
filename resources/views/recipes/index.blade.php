@@ -2,10 +2,13 @@
 @section('content')
 
 <main class="container">
-    <h1>Welcome {{auth()->user()->name}}</h1>
+    @if(empty($keyword))
+    <h1>Welcome {{ auth()->user()->name }}</h1>
+    @endif
     @if ($recipes->isEmpty())
-    <p>You haven't added any recipes yet! Add recipes to show it here.</p>
+    <p>{{ $message }}</p>
     @else
+
     <section>
         <div class="d-flex align-items-center justify-content-between mb-3"> <!--align items at same row-->
             <h4> {{$message}} </h4>

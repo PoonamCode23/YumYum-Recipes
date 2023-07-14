@@ -19,7 +19,7 @@
     <!-- This is from sweetalert -->
     <style>
         body {
-            margin-top: 115px;
+            margin-top: 180px;
             /*this helps to shift body content to 115 px margin top*/
 
             font-family: 'Outfit', sans-serif;
