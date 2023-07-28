@@ -7,7 +7,7 @@
                 @csrf
                 <div class="titlebar mb-4">
                     <h3 style="color:coral">Create Your Own Recipes</h3>
-                    <h5>Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the Allrecipes community.</h5>
+                    <h5>Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the YumYum Recipes community.</h5>
                 </div>
 
 
@@ -25,7 +25,7 @@
 
                         <div class="form-group mb-3">
                             <label class="fs-5" for="formGroupExampleInput2">Description</label>
-                            <textarea style=" height:160px;" name="description" class="form-control"></textarea>
+                            <textarea style=" height:160px;" name="description" class="form-control">{{ old('description') }}</textarea>
                             @if ($errors->has('description'))
                             @foreach ($errors->get('description') as $error)
                             <span class="error-message">{{ $error }}</span>

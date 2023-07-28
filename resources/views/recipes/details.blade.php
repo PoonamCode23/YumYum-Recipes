@@ -56,7 +56,7 @@
                 <ul class="list-group">
 
                     <div class="col-12 col-lg-8">
-                        <li class="list-group-item">
+                        <li class="list-group-item" style="border-block-color: revert;">
                             <div class="row">
                                 <div class="col-9">
                                     <h3>My Review</h3>
@@ -294,7 +294,7 @@
 <style>
     .image-banner {
         width: 100%;
-        height: 65%;
+        height: 550px;
         object-fit: cover;
         margin-bottom: 30px;
 

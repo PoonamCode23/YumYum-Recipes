@@ -20,7 +20,6 @@ class Recipe extends Model
     {
         return $this->hasMany(Comment::class);
     }
-
     public function favourites()
     {
         return $this->hasMany(Favourite::class);

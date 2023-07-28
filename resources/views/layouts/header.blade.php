@@ -2,7 +2,7 @@
     <div class="bg-body-tertiary" style="box-shadow: 0 10px 25px -18px coral; position: fixed;width: 100%;top: 0;z-index: 1;">
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-underline mb-1" id="pills-tab" role="tablist">
             <div class="container d-flex">
-                <a href="{{ route('welcome') }}">
+                <a href="{{ route('homepage') }}">
                     <img src="{{ asset('logo.png') }}" alt="logo" style="width:220px;height: auto;margin-right: 20px;">
                 </a>
                 <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
@@ -14,7 +14,7 @@
                             @if (Route::has('login'))
                             @auth
                             <li class="nav-item me-3">
-                                <a class="nav-link fs-5" aria-current="page" href="{{ route('welcome') }}">Home </a>
+                                <a class="nav-link fs-5" aria-current="page" href="{{ route('homepage') }}">Home </a>
                             </li>
                             <li class="nav-item me-3">
                                 <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.index') }}">My Recipes </a>
@@ -23,7 +23,7 @@
                                 <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.saved')}}">Saved Recipes ({{$savedRecipesCount}})</a> <!-- see AppServiceProvider. php where this count is used globally-->
                             </li>
                             <li class="nav-item me-3">
-                                <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.create') }}">Add Recipe</a>
+                                <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.createrecipes') }}">Add Recipe</a>
                             </li>
                             <li class="nav-item me-3">
                                 <div class="dropdown">
@@ -47,7 +47,7 @@
                             </li>
                             @else
                             <li class="nav-item me-3">
-                                <a class="nav-link fs-5" aria-current="page" href="{{ route('welcome') }}">Home </a>
+                                <a class="nav-link fs-5" aria-current="page" href="{{ route('homepage') }}">Home </a>
                             </li>
                             <li class="nav-item me-3">
                                 <a class="nav-link  fs-5" aria-current="page" href="{{ route('login') }}">Log In</a>
@@ -58,7 +58,7 @@
                             </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.create') }}">Add Recipe</a>
+                                <a class="nav-link fs-5" aria-current="page" href="{{ route('recipes.createrecipes') }}">Add Recipe</a>
                             </li>
                             @endauth
                             @endif
@@ -78,7 +78,7 @@
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'breakfast']) }}">Breakfast</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'lunch']) }}">Lunch</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'dinner']) }}">Dinner</a></li>
-                            <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'salads']) }}">Salads</a></li>
+                            <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'salad']) }}">Salads</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'soups']) }}">Soups</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'desserts']) }}">Desserts</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipes.category', ['category' => 'bakery']) }}">Bakery</a></li>
