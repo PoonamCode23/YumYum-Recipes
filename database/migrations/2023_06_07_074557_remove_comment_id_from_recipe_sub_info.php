@@ -15,7 +15,7 @@ return new class extends Migration
     {
 
         Schema::table('recipe_sub_info', function (Blueprint $table) {
-            $table->dropColumn('comment_id');
+            // $table->dropColumn('comment_id');
         });
     }
 
